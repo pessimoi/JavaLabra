@@ -1,0 +1,30 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package harjoitus;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
+import java.util.*;
+import java.util.Scanner;
+
+public class Pallo extends JPanel {
+
+    private Graphics piirtaja;
+
+    public Pallo(Graphics g) {
+
+        this.piirtaja = g;
+    }
+
+    public void teePallo(Color vari, int x, int y) {
+        super.paint(piirtaja);
+        piirtaja.setColor(vari);
+        piirtaja.fillOval(x, y, 35, 35);
+
+    }
+}

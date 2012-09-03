@@ -1,0 +1,25 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package harjoitus;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class WinOrLoseRenderer {
+
+    public void paint(Graphics g, boolean win) {
+        if (win == true) {
+            g.setColor(Color.MAGENTA);
+            g.drawString("VOITIT! :D", 260, 575);
+            g.drawString("VOITIT! :D", 360, 575);
+            g.drawString("VOITIT! :D", 460, 575);
+        } else if (win == false) {
+            g.setColor(Color.RED);
+            g.drawString("HÄVISIT! :<", 260, 575);
+            g.drawString("HÄVISIT! :<", 360, 575);
+            g.drawString("HÄVISIT! :<", 460, 575);
+        }
+    }
+}

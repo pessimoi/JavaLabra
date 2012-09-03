@@ -1,0 +1,47 @@
+package harjoitus;
+
+import java.util.*;
+
+/**
+ * Arvaukset luokka pitää kirjaa käyttäjän syöttämistä
+ * arvauksista ja tulostaa ne
+ */
+public class Arvaukset {
+
+    private ArrayList<Rivi> lista = new ArrayList<Rivi>();
+
+    /**
+     * Metodi lisää käyttäjän antaman arvauksen listaan
+     * @param arvaus  Käyttäjän antama arvaus
+     */
+    public void lisaaArvaus(Rivi arvaus) {
+        lista.add(arvaus);
+    }
+
+    /**
+     * Metodi tulostaa listan sisällön, jottai aiemmat arvaukset näkyisi.
+     */
+    public void tulostaArvaukset() {
+        System.out.print("Arvaukset: ");
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.print(lista.get(i) + ", ");
+        }
+        System.out.println("");
+    }
+
+    /*
+     * Metodi tyhjentää listan sisällön.
+     */
+    public void tyhjennaArvaukset() {
+        lista.clear();
+    }
+
+    /**
+     * 
+     * @param i indeksi, josta halutaan arvaus
+     * @return palauttaa tietyn arvauksen
+     */
+    public Rivi palautaArvaus(int i) {
+        return lista.get(i);
+    }
+}

@@ -1,0 +1,22 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package harjoitus;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+/**
+ *
+ * @author admin
+ */
+public class NumberRenderer {
+
+    public void paint(Graphics g) {
+        g.setColor(Color.WHITE);
+        for (int i = 0; i < 6; i++) {
+            g.drawString("" + i, 445 + (70 * i), 25);
+        }
+    }
+}

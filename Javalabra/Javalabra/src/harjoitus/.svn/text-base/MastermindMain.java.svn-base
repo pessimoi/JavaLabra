@@ -1,0 +1,43 @@
+// Pessi Moilanen
+// Testaaaaaaan
+package harjoitus;
+
+import java.util.*;
+import java.awt.*;
+import javax.swing.*;
+/**
+ * Luodaan Scanner olio ja Random Olio ja tämän jälkeen käytetään muita metodeja, 
+ * jotka pitävät pelin kulkua yllä
+ */
+
+public class Main {
+
+    static Scanner lukija = new Scanner(System.in, "ISO-8859-1");
+    static Random arpoja = new Random();
+
+    public static void main(String[] args) {
+
+        JFrame ikkuna = new JFrame();
+        ikkuna.setSize(860, 700);
+        ikkuna.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        ikkuna.setVisible(true);
+        Grafiikat peli = new Grafiikat();
+        peli.setBackground(Color.BLACK);
+        Container sisalto = ikkuna.getContentPane();
+        sisalto.add(peli);
+        ikkuna.addKeyListener(peli);
+
+
+//        peli.uusiPeli();
+//        Vaihtoehdot tekija = new Vaihtoehdot();
+//        ArrayList<Rivi> combinations = tekija.luoVaihtoehdot();
+//        int yhdistelma = arpoja.nextInt(combinations.size());
+//        Rivi arvattava = combinations.get(yhdistelma);
+//
+//        Pelaa pelaaja = new Pelaa(arvattava);
+//        pelaaja.syote();
+
+
+
+    }
+}

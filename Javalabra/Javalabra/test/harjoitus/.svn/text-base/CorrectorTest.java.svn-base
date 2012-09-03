@@ -1,0 +1,139 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package harjoitus;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+import java.util.*;
+
+/**
+ *
+ * @author admin
+ */
+public class RiviTesti {
+
+    Random arpoja = new Random();
+
+    public RiviTesti() {
+    }
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
+
+    @Before
+    public void setUp() {
+    }
+
+    @After
+    public void tearDown() {
+    }
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+
+    @Test
+    public void melkeinOikeinHutiNelja() {
+        boolean onnistuu = true;
+        for (int i = 0; i < 1000000; i++) {
+            int eka = arpoja.nextInt(6);
+            int toka = arpoja.nextInt(6);
+            int kolmas = arpoja.nextInt(6);
+            int neljas = arpoja.nextInt(6);
+            Rivi oikeaRivi = new Rivi(eka, toka, kolmas, neljas);
+            eka = arpoja.nextInt(6);
+            toka = arpoja.nextInt(6);
+            kolmas = arpoja.nextInt(6);
+            neljas = arpoja.nextInt(6);
+            Rivi arvaus = new Rivi(eka, toka, kolmas, neljas);
+            Tarkastaja tarkastaja = new Tarkastaja(oikeaRivi, arvaus);
+
+            if (tarkastaja.getHuti() + tarkastaja.getMelkein() + tarkastaja.getOikea() != 4) {
+                onnistuu = false;
+            }
+        }
+        assertTrue(onnistuu);
+    }
+//Testejä luokalle Vaihtoehdot
+
+    @Test
+    public void kaikkiVaihtoEhdot() {
+        Vaihtoehdot lista = new Vaihtoehdot();
+        assertEquals(1296, lista.luoVaihtoehdot().size());
+    }
+
+    @Test
+    public void kaikkiVaihtoEhdotErilaisia() {
+        boolean onnistuu = true;
+        Vaihtoehdot lista = new Vaihtoehdot();
+        ArrayList<Rivi> kaikki = lista.luoVaihtoehdot();
+        ArrayList<Rivi> vertaukset = new ArrayList<Rivi>();
+        for (int i = 0; i < kaikki.size(); i++) {
+            if (vertaukset.contains(kaikki.get(i))) {
+                onnistuu = false;
+            }
+        }
+        assertTrue(onnistuu);
+    }
+
+    @Test
+    public void syotettyArvausAntaaTarkastuksenEka() {
+        Rivi arvaus = new Rivi(0, 0, 1, 0);
+        Rivi arvattava = new Rivi(0, 0, 3, 1);
+        Tarkastaja tarkastaja = new Tarkastaja(arvaus, arvattava);
+        assertEquals(2, tarkastaja.getOikea());
+        assertEquals(1, tarkastaja.getMelkein());
+        assertEquals(1, tarkastaja.getHuti());
+    }
+
+    //Testataan että tarkastaja antaa oikeat tulokset
+    @Test
+    public void syotettyArvausAntaaTarkastuksenToka() {
+        Rivi arvaus = new Rivi(2, 3, 4, 5);
+        Rivi arvattava = new Rivi(5, 4, 3, 2);
+        Tarkastaja tarkastaja = new Tarkastaja(arvaus, arvattava);
+        assertEquals(0, tarkastaja.getOikea());
+        assertEquals(4, tarkastaja.getMelkein());
+        assertEquals(0, tarkastaja.getHuti());
+    }
+
+    @Test
+    public void syotettyArvausAntaaTarkastuksenKolmas() {
+        Rivi arvaus = new Rivi(2, 3, 4, 2);
+        Rivi arvattava = new Rivi(2, 3, 4, 2);
+        Tarkastaja tarkastaja = new Tarkastaja(arvaus, arvattava);
+        assertEquals(4, tarkastaja.getOikea());
+        assertEquals(0, tarkastaja.getMelkein());
+        assertEquals(0, tarkastaja.getHuti());
+    }
+
+    @Test
+    public void syotettyArvausAntaaTarkastuksenNeljas() {
+        Rivi arvaus = new Rivi(2, 3, 4, 2);
+        Rivi arvattava = new Rivi(2, 4, 3, 2);
+        Tarkastaja tarkastaja = new Tarkastaja(arvaus, arvattava);
+        assertEquals(2, tarkastaja.getOikea());
+        assertEquals(2, tarkastaja.getMelkein());
+        assertEquals(0, tarkastaja.getHuti());
+    }
+
+    @Test
+    public void syotettyArvausAntaaTarkastuksenViides() {
+        Rivi arvaus = new Rivi(1, 1, 1, 1);
+        Rivi arvattava = new Rivi(0, 0, 0, 1);
+        Tarkastaja tarkastaja = new Tarkastaja(arvaus, arvattava);
+        assertEquals(1, tarkastaja.getOikea());
+        assertEquals(0, tarkastaja.getMelkein());
+        assertEquals(3, tarkastaja.getHuti());
+    }
+}

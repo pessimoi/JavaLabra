@@ -1,0 +1,40 @@
+package harjoitus;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.ArrayList;
+
+public class GuessRenderer {
+
+    public void paint(Graphics g, int kierrokset, ArrayList<Character> merkit) {
+        Pallo pallonTekija = new Pallo(g);
+
+        for (int k = 0; k < kierrokset + 1; k++) {
+            int x = 430;
+            int y = 120;
+            int rivi = 1;
+            for (int pallo = 0; pallo < merkit.size(); pallo++) {
+
+                if (merkit.get(pallo) == '0') {
+                    pallonTekija.teePallo(Color.BLUE, x, y);
+                } else if (merkit.get(pallo) == '1') {
+                    pallonTekija.teePallo(Color.YELLOW, x, y);
+                } else if (merkit.get(pallo) == '2') {
+                    pallonTekija.teePallo(Color.RED, x, y);
+                } else if (merkit.get(pallo) == '3') {
+                    pallonTekija.teePallo(Color.MAGENTA, x, y);
+                } else if (merkit.get(pallo) == '4') {
+                    pallonTekija.teePallo(Color.GREEN, x, y);
+                } else if (merkit.get(pallo) == '5') {
+                    pallonTekija.teePallo(Color.CYAN, x, y);
+                }
+                if (rivi % 4 == 0) {
+                    y = y + 50;
+                    x = 380;
+                }
+                x = x + 50;
+                rivi++;
+            }
+        }
+    }
+}

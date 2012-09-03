@@ -1,0 +1,205 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package harjoitus;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.*;
+
+/**
+ *
+ * @author admin
+ */
+public class Grafiikat extends JPanel implements KeyListener {
+
+    static Random arpoja = new Random();
+    private Graphics piirtaja;
+    private int kierrokset = 0;
+    private int maara = 0;
+    private int eka;
+    private int toka;
+    private int kolmas;
+    private int neljas;
+    private Rivi arvaus;
+    private Rivi arvattava;
+    private Arvaukset arvaukset = new Arvaukset();
+    private ArrayList<Integer> oikeat = new ArrayList<Integer>();
+    private ArrayList<Integer> melkein = new ArrayList<Integer>();
+    private ArrayList<Character> merkit = new ArrayList<Character>();
+    private boolean voitto = false;
+    private int pelit = 0;
+    private int voitot = 0;
+    private boolean uusi = false;
+    private boolean kasvataPelit = true;
+    private ArvausRenderer arvausRenderer = new ArvausRenderer();
+    private NumberRenderer numbersRenderer = new NumberRenderer();
+    private StartingBallRenderer startingBallRenderer = new StartingBallRenderer();
+    private FeedbackRenderer feedbackRenderer = new FeedbackRenderer();
+    private GuessRenderer guessRenderer = new GuessRenderer();
+    private BottomTextRenderer bottomTextRenderer = new BottomTextRenderer();
+    private WinOrLoseRenderer winOrLoseRenderer = new WinOrLoseRenderer();
+
+    public void paint(Graphics g) {
+
+        this.piirtaja = g;
+        super.paint(piirtaja);
+
+        //Tulostaa kaikki omat arvatut pallot
+        guessRenderer.paint(g, kierrokset, merkit);
+
+        //Tulostaa kaikki oikeat ja melkein rivit
+        feedbackRenderer.paint(g, kierrokset, oikeat, melkein);
+
+        //Tekee ylärivin kaikki pallot
+        startingBallRenderer.paint(g);
+
+        //Numerot pallojen päälle
+        numbersRenderer.paint(g);
+
+        //Arvaus tekstit
+        arvausRenderer.paint(g);
+
+
+
+        //Voitto ilmoitus
+        if (voitto == true) {
+            winOrLoseRenderer.paint(g, true);
+            if (uusi == false) {
+                voitot++;
+                pelit++;
+                kasvataPelit = false;
+            }
+        }
+
+        //Häviö ilmoitus
+        if (kierrokset == 9 && voitto == false) {
+            winOrLoseRenderer.paint(g, false);
+            if (uusi == false) {
+                kasvataPelit = false;
+                pelit++;
+            }
+        }
+
+        //Alaosan ilmoitukset
+        bottomTextRenderer.paint(g, pelit, voitot);
+    }
+
+    //Arpoo arvattavan rivin
+    public Rivi pelaa() {
+        Vaihtoehdot tekija = new Vaihtoehdot();
+        ArrayList<Rivi> combinations = tekija.luoVaihtoehdot();
+        int yhdistelma = arpoja.nextInt(combinations.size());
+        arvattava = combinations.get(yhdistelma);
+        return arvattava;
+    }
+
+    //Tekee uuden pelin aloitukseen tarvittavat asiat
+    private void aloitaUusiPeli() {
+        voitto = false;
+        uusi = false;
+        merkit.clear();
+        kierrokset = 0;
+        arvattava = pelaa();
+    }
+
+    private void koneenTuloste(Rivi arvaus, Tarkastaja tulostaja) {
+
+//        System.out.println("arvaus: " + arvaus);
+//        System.out.println("Oikea: " + tulostaja.getOikea());
+        oikeat.add(tulostaja.getOikea());
+        melkein.add(tulostaja.getMelkein());
+//        System.out.println("Melkein: " + tulostaja.getMelkein());
+//        System.out.println("Huti: " + tulostaja.getHuti());
+
+        if (tulostaja.getOikea() == 4) {
+//            System.out.println("Oikein meni! :D");
+//            System.out.println("VOITIT! :)");
+            voitto = true;
+        }
+
+//        System.out.println("kierros: " + kierrokset);
+        kierrokset++;
+        maara = 0;
+        repaint();
+    }
+
+    public void keyTyped(KeyEvent e) {
+    }
+
+    public void keyPressed(KeyEvent e) {
+
+        char p = e.getKeyChar();
+
+        if (p == 'q') {
+            System.exit(0);
+        }
+
+        //Arpoo ensimmäisen rivin, kun pelejä pelattu 0
+        if (kierrokset == 0 && pelit == 0) {
+            this.arvattava = pelaa();
+        }
+
+        //Käynnistää uuden pelin, jos painetaan r-kirjainta
+        if ((p == 'r' && pelit >= 0 && merkit.size() > 0)) {
+            this.arvattava = pelaa();
+            merkit.clear();
+            uusi = false;
+            voitto = false;
+            kierrokset = 0;
+            if (kasvataPelit == true) {
+                pelit++;
+            }
+            maara = 0;
+            oikeat.clear();
+            melkein.clear();
+            kasvataPelit = true;
+            arvaukset.tyhjennaArvaukset();
+            repaint();
+        }
+
+        if (kierrokset == 9 || voitto) {
+            uusi = true;
+        }
+
+        if (uusi && Character.isLetter(p)) {
+            aloitaUusiPeli();
+        }
+
+        //Tallentaa painetut merkit
+        if (p == '0' || p == '1' || p == '2' || p == '3' || p == '4' || p == '5') {
+            if (uusi == false) {
+                merkit.add(p);
+                String lol = "" + p;
+                if (maara == 0) {
+                    eka = Integer.parseInt(lol);
+                }
+                if (maara == 1) {
+                    toka = Integer.parseInt(lol);
+                }
+                if (maara == 2) {
+                    kolmas = Integer.parseInt(lol);
+                }
+                if (maara == 3) {
+                    neljas = Integer.parseInt(lol);
+                }
+                maara++;
+                repaint();
+            }
+
+        }
+        if (maara == 4) {
+            this.arvaus = new Rivi(eka, toka, kolmas, neljas);
+            arvaukset.lisaaArvaus(arvaus);
+            Tarkastaja tulostaja = new Tarkastaja(arvaus, arvattava);
+            koneenTuloste(arvaus, tulostaja);
+            arvaukset.tulostaArvaukset();
+            maara = 0;
+        }
+    }
+
+    public void keyReleased(KeyEvent e) {
+    }
+}

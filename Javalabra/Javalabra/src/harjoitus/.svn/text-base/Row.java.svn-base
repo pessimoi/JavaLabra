@@ -1,0 +1,53 @@
+package harjoitus;
+
+import java.util.*;
+/**
+ * Luodaan Rivi luokka jonka avulla voidaan tehdä Rivi olioita, jotka sisältävät
+ * neljä erillistä arvoa välillä 0-6 ja tallentaa ne listaan. Kyseistä luokkaa 
+ * käytetään koneen arpoman rivin ylläpitoon ja käyttäjän arvaamien rivien 
+ * ylläpitämiseen
+ */
+public class Rivi {
+
+    private int eka;
+    private int toka;
+    private int kolmas;
+    private int neljas;
+    private int[] luvut;
+    /**
+     * Alustaa Rivi olion. Tallentaa tauluun neljä saatua arvoa.
+     * 
+     * @param eka Rivi olion eka int tyyppinen arvo
+     * @param toka Rivi olion toinen int tyyppinen arvo
+     * @param kolmas Rivi olion kolmas int tyyppinen arvo
+     * @param neljas Rivi olion neljäs int tyyppinen arvo
+     */
+
+    public Rivi(int eka, int toka, int kolmas, int neljas) {
+        this.eka = eka;
+        this.toka = toka;
+        this.kolmas = kolmas;
+        this.neljas = neljas;
+
+        luvut = new int[]{eka, toka, kolmas, neljas};
+    }
+    /**
+     * Palauttaa Rivi olion neljästä luvusta halutun luvun
+     * 
+     * @param monesko Sisältää luvun indeksin
+     * @return palauttaa taulukosta kyseisen Rivi olion luvun
+     */
+
+    public int luku(int monesko) {
+        return luvut[monesko];
+    }
+
+    /**
+     * Antaa syötettä
+     * 
+     * @return palauttaa syötteenä Rivi olion sisältämät numerot
+     */
+    public String toString() {
+        return "" + eka + toka + kolmas + neljas;
+    }
+}

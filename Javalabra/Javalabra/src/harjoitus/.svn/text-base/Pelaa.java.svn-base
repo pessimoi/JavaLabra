@@ -1,0 +1,68 @@
+package harjoitus;
+
+import java.util.*;
+/**
+ * Pitää pelin kulkua yllä, vertailee vastauksia arvattavan rivin kanssa ja
+ * kysyy käyttäjän syötettä
+ */
+class Pelaa {
+
+    private Rivi arvattava;
+    private Scanner lukija = new Scanner(System.in, "ISO-8859-1");
+
+    /**
+     * Alustaa Pelaa luokan
+     * 
+     * @param arvattava Rivi tyyppinen muuttuja joka on koneen arpoma
+     */
+    public Pelaa(Rivi arvattava) {
+        this.arvattava = arvattava;
+    }
+    /**
+     * Jatkaa arvausten kyselyä, kunnes osuu oikea vastaus pitää peliä yllä.
+     */
+
+    public void syote() {
+        Arvaukset arvaukset = new Arvaukset();
+        while (true) {
+            Rivi arvaus = lueArvaus();
+            arvaukset.lisaaArvaus(arvaus);
+            Tarkastaja tulostaja = new Tarkastaja(arvaus, arvattava);
+            if (koneenTuloste(arvaus, tulostaja)) {
+                break;
+            }
+            arvaukset.tulostaArvaukset();
+        }
+    }
+    /**
+     * @param arvaus Käyttäjän antama arvaus
+     * @param tulostaja Tarkastaja olio, joka ilmoittaa arvauksen oikeellisuuden
+     * @return boolean Palauttaa True jos kaikki 4 oikein, muuten false
+     */
+
+    private boolean koneenTuloste(Rivi arvaus, Tarkastaja tulostaja) {
+        System.out.println("arvaus: " + arvaus);
+        System.out.println("Oikea: " + tulostaja.getOikea());
+        System.out.println("Melkein: " + tulostaja.getMelkein());
+        System.out.println("Huti: " + tulostaja.getHuti());
+        if (tulostaja.getOikea() == 4) {
+            System.out.println("Oikein meni! :D");
+            return true;
+        }
+        return false;
+    }
+    /**
+     * Ottaa käyttäjän arvauksen syötteenä ja palauttaa sen kokonaisena
+     * @return arvaus Palauttaa käyttäjän arvauksista muodostetun Rivi olion
+     */
+
+    private Rivi lueArvaus() {
+        System.out.println("Syötä numerot yksitellen!");
+        int first = Integer.parseInt(lukija.nextLine());
+        int second = Integer.parseInt(lukija.nextLine());
+        int third = Integer.parseInt(lukija.nextLine());
+        int fourth = Integer.parseInt(lukija.nextLine());
+        Rivi arvaus = new Rivi(first, second, third, fourth);
+        return arvaus;
+    }
+}

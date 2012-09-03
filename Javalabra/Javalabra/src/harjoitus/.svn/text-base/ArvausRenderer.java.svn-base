@@ -1,0 +1,24 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package harjoitus;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+/**
+ *
+ * @author admin
+ */
+public class ArvausRenderer {
+public void paint(Graphics g) {
+    //Arvausrivien tuloste
+        g.setColor(Color.WHITE);
+        g.drawString("Oikea", 125, 55);
+        g.drawString("Melkein", 245, 55);
+        for (int i = 0; i < 9; i++) {
+            g.drawString("Arvaus " + (i + 1) + " :", 360, 140 + (i * 50));
+        }
+}    
+}

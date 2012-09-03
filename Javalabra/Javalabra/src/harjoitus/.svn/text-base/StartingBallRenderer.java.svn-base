@@ -1,0 +1,27 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package harjoitus;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+/**
+ *
+ * @author admin
+ */
+public class StartingBallRenderer {
+
+    public void paint(Graphics g) {
+        Pallo pallonTekija = new Pallo(g);
+        pallonTekija.teePallo(Color.BLUE, 430, 30);
+        pallonTekija.teePallo(Color.YELLOW, 500, 30);
+        pallonTekija.teePallo(Color.RED, 570, 30);
+        pallonTekija.teePallo(Color.MAGENTA, 640, 30);
+        pallonTekija.teePallo(Color.GREEN, 710, 30);
+        pallonTekija.teePallo(Color.CYAN, 780, 30);
+        pallonTekija.teePallo(Color.WHITE, 80, 30);
+        pallonTekija.teePallo(Color.GRAY, 200, 30);
+    }
+}

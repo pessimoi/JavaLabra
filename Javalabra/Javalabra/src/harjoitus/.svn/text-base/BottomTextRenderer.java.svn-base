@@ -1,0 +1,19 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package harjoitus;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+public class BottomTextRenderer {
+
+    public void paint(Graphics g, int pelit, int voitot) {
+        g.setColor(Color.WHITE);
+        g.drawString("Poistu: 'Q'", 560, 585);
+        g.drawString("Uusi peli: 'R'", 560, 605);
+        g.drawString("Pelattujen pelienmäärä: " + pelit, 560, 625);
+        g.drawString("Voitetut pelit: " + voitot, 560, 645);
+    }
+}

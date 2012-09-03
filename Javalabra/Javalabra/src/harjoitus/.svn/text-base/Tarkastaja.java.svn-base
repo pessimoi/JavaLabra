@@ -1,0 +1,99 @@
+package harjoitus;
+
+/**
+ * Vertaa käyttäjän arvausta arvattavan rivin kanssa ja palauttaa oikeiden, väärien 
+ * ja melkein arvojen määrän.
+ */
+public class Tarkastaja {
+
+    private int oikea;
+    private int melkein;
+    private int huti;
+    private Rivi arvaus;
+    private Rivi arvattava;
+    /**
+     * Alustaa Tarkastaja luokan ja kutsuu tarkista metodia.
+     * 
+     * @param arvaus Käyttäjän syöttämä arvaus
+     * @param arvattava Koneen arpoma rivi johon arvausta verrataan
+     */
+
+    public Tarkastaja(Rivi arvaus, Rivi arvattava) {
+        this.arvaus = arvaus;
+        this.arvattava = arvattava;
+        tarkista(arvaus, arvattava);
+    }
+    /**
+     * Metodi palauttaa oikeiden merkkien määrän
+     * 
+     * @return oikea Palauttaa arvon, joka vastaa oikeiden merkkien määrää
+     */
+
+    public int getOikea() {
+        return oikea;
+    }
+    /**
+     * Metodi palauttaa melkein merkkien määrän
+     * 
+     * @return melkein  Palauttaa arvon, joka vastaa melkein merkkien määrää
+     */
+
+    public int getMelkein() {
+        return melkein;
+    }
+    /**
+     * Metodi palauttaa väärien merkkien määrän
+     * 
+     * @return melkein  Palauttaa arvon, joka vastaa väärien merkkien määrää
+     */
+
+    public int getHuti() {
+        return huti;
+    }
+/**
+     * Suorittaa arvauksen ja arvattavan vertailun, kasvattaa myöh huti, melkein ja oikein
+     * muuttujien arvoja.
+     * 
+     * @param arvaus Käyttäjän syöttämä arvaus
+     * @param arvattava Koneen arpoma rivi johon arvausta verrataan
+     */
+    private void tarkista(Rivi arvaus, Rivi arvattava) {
+
+        int[] kaytettavat = new int[]{arvattava.luku(0), arvattava.luku(1), arvattava.luku(2), arvattava.luku(3)};
+        int[] arvauskaytettavat = new int[]{arvaus.luku(0), arvaus.luku(1), arvaus.luku(2), arvaus.luku(3)};
+
+        for (int h = 0; h < 4; h++) {
+            int arvottu = arvaus.luku(h);
+            if (arvottu == arvattava.luku(h)) {
+                kaytettavat[h] = -1;
+                arvauskaytettavat[h] = -2;
+                oikea++;
+            }
+        }
+
+        int z = 0;
+        int g = 0;
+
+        while (g < 4) {
+            while (z < 4) {
+                if (kaytettavat[g] == arvauskaytettavat[z]) {
+                    melkein++;
+                    kaytettavat[g] = -1;
+                    arvauskaytettavat[z] = -2;
+                    z = 4;
+                }
+                z++;
+            }
+            z = 0;
+            g++;
+        }
+
+        int r = 0;
+        while (r < 4) {
+            if (kaytettavat[r] != -1) {
+                huti++;
+            }
+            r++;
+        }
+    }
+}
